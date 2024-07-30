@@ -14,7 +14,7 @@ NIVEL = (
 )
 class Categoria(BaseModel):
     nombre = models.CharField(max_length=60)
-    preguntas = models.IntegerField(default=5)
+  
 
 
 class Pregunta(BaseModel):
@@ -27,10 +27,15 @@ class Respuesta(BaseModel):
     texto = models.TextField()
     es_correcta = models.BooleanField(default=False)
 
+class ConfiguracionPartida(BaseModel):
+    num_preguntas = models.IntegerField(default=1)
+    tiempo_por_nivel = models.TimeField(default='05:00:00')
+
 
 class Partida(BaseModel):
     jugador = models.ForeignKey(Jugador, on_delete=models.CASCADE)
     score = models.IntegerField()
+    configuracion = models.ForeignKey(ConfiguracionPartida, on_delete=models.CASCADE)
 
 class DetallePartida():
     partida = models.ForeignKey(Partida, on_delete=models.CASCADE)

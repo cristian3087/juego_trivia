@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style type="text/css">
+        .form-login{
+            background-color: beige;
+            width: 50%;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>JUEGO TRIVIA</h1>
+    <div>
+        <form class="form-login" action="" method="post">
+            {% csrf_token %}
+            <legend>LOGIN</legend>
+            {{form.as_p}}
+            <button type="submit">Iniciar sesión</button>
+        </form>
+        {%if error%}
+        <div class="alert notification">
+          {{error}}
+        </div>
+        {%endif%}
+    </div>
+    <div>
+        <form class="form-login" method="post">
+            {% csrf_token %}
+            {{ form_add.as_p }}
+            <button type="submit">Registrarse</button>
+        </form>
+    </div>
+</body>
+</html>

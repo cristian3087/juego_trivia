@@ -2,7 +2,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from .forms import LoginForm, RegistroForm
 
 # Create your views here.
 
@@ -11,16 +11,20 @@ def user_login(request):
     print(request.method)
     context = {}
     if request.method=="POST":
-        user_name = request.POST.get("user")
-        password = request.POST.get("pass")
+        user_name = request.POST.get("username")
+        password = request.POST.get("password")
         user = authenticate(username=user_name, password=password)
         if user:   #Crear Session
             login(request, user)
-            return redirect('eleccion')#render(request, 'eleccion/voto.html', context)
+            return redirect('juego')
         else:
             context["error"] = "User or Password incorrect"
             messages.error(request,"Usuario o Contraseña Incorrecta")
-    return render(request,'usuarios/login.html', context)
+            return redirect('user_login')
+    else:
+        context['form'] = LoginForm()
+        context['form_add'] = RegistroForm()
+        return render(request,'usuarios/login.html', context)
 
 
 def user_logout(request):
