@@ -29,7 +29,7 @@ class Respuesta(BaseModel):
 
 class ConfiguracionPartida(BaseModel):
     num_preguntas = models.IntegerField(default=1)
-    tiempo_por_nivel = models.TimeField(default='05:00:00')
+    tiempo_por_nivel = models.IntegerField(default=5)
 
 
 class Partida(BaseModel):
