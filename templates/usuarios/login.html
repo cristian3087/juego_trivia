@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <h1>JUEGO TRIVIA</h1>
+    <h1>JUEGO SABE SABE</h1>
     <div>
         <form class="form-login" action="" method="post">
             {% csrf_token %}
@@ -29,11 +29,19 @@
         </div>
         {%endif%}
     </div>
-    <div>
+    <!--<div>
         <form class="form-login" method="post">
             {% csrf_token %}
             {{ form_add.as_p }}
             <button type="submit">Registrarse</button>
+        </form>
+    </div>-->
+
+    <div>
+        <form class="form-login" action="{%url 'add_jugador'%}" method="post" autocomplete="off">
+            {% csrf_token %}
+            {{ form_jugador.as_p }}
+            <button type="submit">Crear</button>
         </form>
     </div>
 </body>
