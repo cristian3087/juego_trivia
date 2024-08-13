@@ -54,6 +54,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            text-decoration: none;
 
         }
         .opt{
@@ -99,22 +100,34 @@
 <body>
     <h1 style="text-align: center;"> QUÍEN SABE SABE</h1> <mark id='timer' class="temporizador">03:59</mark>
     <div class="content">
+        {%for i in preguntas%}
         <section class="pregunta">
-            <img src="https://cdn.pixabay.com/photo/2017/09/01/00/16/png-2702697_1280.png" alt="imagen">
-             <p>1. Qué comen los animales carnivoros </p>
+           <!-- <img src="https://cdn.pixabay.com/photo/2017/09/01/00/16/png-2702697_1280.png" alt="imagen">-->
+            <img src="{{i.image_link}}" alt="imagen">
+            <p>{{i.question}}</p>
         </section>
-        
          <section class="respuesta"> 
-            <div class="btn"> Hierva </div>
-            <div class="btn"> Carne </div>
+            {%for r in i.answers%}
+            <div class="btn"> {{r}} </div>
+            {%endfor%}
+            <!--<div class="btn"> Carne </div>
             <div class="btn"> Chocolate </div>
-            <div class="btn"> Pizza </div>
+            <div class="btn"> Pizza </div>-->
          </section>
     
-         <section class="navegar">
-            <button class="btn" type="button">◀</button>
-            <button class="btn" type="button"> ▶ </button>
-         </section>
+         <nav class="navegar">
+            {%if preguntas.has_previous%}
+                <a class="btn" href="?page={{preguntas.previous_page_number}}"> ◀ </a>
+            {%endif%}
+            {%if preguntas.has_next%}
+                <a class="btn" href="?page={{preguntas.paginator.num_pages}}"> ▶ </a>
+            {%endif%}
+         </nav>
+         
+            
+         {% endfor %}
+
+         {{preguntas}}
     </div>
     <script>
         let reloj = document.getElementById('timer');
