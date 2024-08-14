@@ -83,10 +83,22 @@
         .navegar .btn:hover{
             background-color: coral;
         }
+        .temporizador{
+            position: fixed;
+            top: 2%;
+            right: 5%;
+            padding: 5px;
+            border: 2px solid rgb(245, 154, 68);
+            color: tomato;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18pt;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center;"> QUÍEN SABE SABE</h1>
+    <h1 style="text-align: center;"> QUÍEN SABE SABE</h1> <mark id='timer' class="temporizador">03:59</mark>
     <div class="content">
         {%for p in preguntas%}
         <section class="pregunta">
@@ -123,5 +135,55 @@
 
          {{preguntas}}
     </div>
+    <script>
+        let reloj = document.getElementById('timer');
+        let minutos = 0;
+        let segundos = 10;
+        temporizador = setInterval(()=>{
+            segundos-=1;
+            seg = segundos.toString().length!==2 ? `0${segundos}`:segundos    
+            timer.innerText = `0${minutos}:${seg}`
+            if(minutos===0 && segundos===0){
+                clearInterval(temporizador);
+                console.log("UNO:",getCookie('csrftoken'));
+                console.log("DOS",'{{ csrf_token }}');
+                fetch("/juego/",
+                {
+                    method:"POST",
+                    body:JSON.stringify({
+                        saludo: "HOLA",
+                    }),
+                    headers:{
+                        "csrfmiddlewaretoken": '{{ csrf_token }}',    
+                    },
+                });
+            }
+            if (segundos === 0 && minutos>0){ 
+                minutos -=1;
+                segundos =59
+            } 
+        },
+        1000)
+        function stopTimer(){
+            clearInterval(temporizador)
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        
+    </script>
 </body>
 </html>

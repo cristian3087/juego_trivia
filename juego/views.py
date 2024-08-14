@@ -22,3 +22,4 @@ def juego_trivia(request):
     data['preguntas'] = preguntas 
     data['total'] = paginador.num_pages
     return render(request, 'juego/trivia.html', data)
+
